@@ -72,11 +72,12 @@ class ToDoView extends ConsumerWidget {
                             onDismissed: (direction) {
                               controller.deleteItem(item);
                             },
-                            child: CheckboxListTile(
-                              value: todoState.isDone,
+                            child:CheckboxListTile(
+                              value: item.isDone, // Değiştirildi
                               title: Text(item.name ?? ""),
                               onChanged: (value) {
                                 todoNotifier.changeIsDone(value!);
+                                controller.updateItem(item.copyWith(isDone: value)); // Öğenin durumunu güncelleme
                               },
                             ),
                           ),
