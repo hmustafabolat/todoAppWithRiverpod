@@ -33,7 +33,9 @@ class ToDoView extends ConsumerWidget {
                 hintText: "Bugün ne yapmayı düşünüyorsun?",
                 hintStyle: TextStyle(fontWeight: FontWeight.bold),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueGrey,),
+                  borderSide: BorderSide(
+                    color: Colors.blueGrey,
+                  ),
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
@@ -59,25 +61,26 @@ class ToDoView extends ConsumerWidget {
 
                       return Padding(
                         padding: EdgeInsets.all(10.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: Colors.blueGrey,
-                              width: 2,
+                        child: Dismissible(
+                          key: ValueKey(item.id),
+                          onDismissed: (direction) {
+                            controller.deleteItem(item);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.blueGrey,
+                                width: 2,
+                              ),
                             ),
-                          ),
-                          child: Dismissible(
-                            key: ValueKey(item.id),
-                            onDismissed: (direction) {
-                              controller.deleteItem(item);
-                            },
-                            child:CheckboxListTile(
-                              value: item.isDone, // Değiştirildi
+                            child: CheckboxListTile(
+                              value: item.isDone,
                               title: Text(item.name ?? ""),
                               onChanged: (value) {
                                 todoNotifier.changeIsDone(value!);
-                                controller.updateItem(item.copyWith(isDone: value)); // Öğenin durumunu güncelleme
+                                controller.updateItem(item.copyWith(
+                                    isDone: value)); // Öğenin durumununu güncelledim.
                               },
                             ),
                           ),
